@@ -1,0 +1,127 @@
+/* CSS stuff */
+
+#title
+{
+    font-family:Helvetica, sans-serif;
+    line-height: 1.5em;
+    text-align: center;
+
+    width: 50%;
+    margin: auto;
+
+    font-size: 18px;
+    background-color:rgba(216, 13, 13, 0.87);
+    border-radius: 5px;
+}
+#bg
+{
+    height:40vw;
+    width: 50vw;
+    margin: auto;
+    background-color: rgba(108, 108, 117, 0.829);
+    border-radius: 4px;
+
+    text-align: center;
+    
+    
+}
+
+#calculator
+{
+    /* padding-top:5% ; */
+    /* padding-bottom: 100px; */
+    /* padding-left: 50px; */
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    background-color: rgba(108, 108, 117, 0.829);
+    border-radius: 3px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+
+    position: relative;
+    top: 10%;
+
+    display: grid;
+    grid-template-columns: 60% 30%;
+    grid-gap: 3%;
+}
+#display
+{   
+
+    display: inline-block;
+    font-family: verdana;
+    font-weight: 400;
+    font-size: 25px;
+    border-radius: 3px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 1%;
+
+    background-color: white;
+    width: 75%;
+    margin: auto;
+    text-align: right;
+
+    grid-column-start: 1;
+    grid-column-end: 3;
+    
+    position: absolute;
+    right: 10%;
+    top: 5%;
+}
+
+#btn_grid
+{
+    
+    position: relative;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 3%;
+
+    position: absolute;
+    right: -15%;
+    top: 30%;
+
+    height: 55%;
+    width: 100%;
+    transform: scale(1.2,1.2);
+
+    
+}
+.btn:hover
+{
+    color: white;
+}
+
+.btn:active {
+    background-color:rgba(216, 13, 13, 0.87);
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+  }
+
+.btn
+{
+    border-radius: 2px;
+    display: inline-block;
+    border: none;
+    text-align: center;
+    font-size: 45px;
+    transition-duration: 0.3s;
+}
+
+#oth_buttons
+{
+    display: grid;
+    grid-gap: 5%;
+
+    font-size: 55px;
+    width: 15%;
+    height: 87%;
+
+    position: absolute;
+    right: 5%;
+    top: 14%;
+    transform: scale(1,0.75); 
+}
