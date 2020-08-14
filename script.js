@@ -3,9 +3,6 @@
 let DispString = "";
 let disp = document.querySelector("#display");
 
-let Buffer = "";
-let buffcount = 0;
-let Bstring ="";
 //Event listeners
 document.querySelector("#ZERO").addEventListener("click",()=> DispVal("0"));
 document.querySelector("#ONE").addEventListener("click",()=> DispVal("1"));
@@ -26,7 +23,7 @@ document.querySelector("#PLUS").addEventListener("click",()=> DispVal("+"));
 document.querySelector("#MULTIPLY").addEventListener("click",()=> DispVal("*"));
 document.querySelector("#DIVIDE").addEventListener("click",()=> DispVal("/"));
 document.querySelector("#MINUS").addEventListener("click",()=> DispVal("-"));
-// document.querySelector("#EQUAL").addEventListener("click",()=> DispVal("="));
+ document.querySelector("#EQUAL").addEventListener("click",()=> sigma(DispString));
 
 
 // Functions to calculate stuff
@@ -69,20 +66,10 @@ function operate(num1, num2, operator)
     return ans;
 }
 
-function NotEmpty(value)
-{
-    return value !== "";
-}
 //section for refreshing display
 function DispCls()// Probably gonna use the 'CE' button to call this function
 {
-    
-    Buffer.length = 0;
-    Buffer = Buffer.filter(NotEmpty);
-    Bstring = "";
     DispString = "";
-    console.log(Buffer);
-    console.log(Buffer.length);
     DispUpdate("0");
 }
 
@@ -93,45 +80,98 @@ function DispUpdate(val)
     return 0;
 }
 
-// TODO: Use a string instead of an array for the buffer
-
 // Section for the string to store input
 function DispVal(character)
 {
-    if(character === "+" || character === "-" || character === "*" || character === "/")
-    {   
-        console.log("Activate!");
-        Bstring = character;
-        buffcount += 1;
-        Buffer[buffcount] = Bstring;
-        DispString += character;
-        buffcount += 1;
-        Bstring = "";
-        
-    }
-    else
-    {   
-        Bstring += character;
-        DispString += character;
-        Buffer[buffcount] = Bstring;
-    }
+    DispString += character;        
     
     DispUpdate(DispString);
-    console.log(Buffer);
+    // console.log(DispString);
 }
 
 function Clear()
 {
-    console.log(Buffer);
+   
     
-    DispString = DispString.slice(0,-1);
-    Buffer[buffcount] = DispString;    
+    DispString = DispString.slice(0,-1);  
     
-    console.log(Buffer);
-    console.log(DispString);
-    console.log(DispString.length);
+    // console.log("Current Value in String: " + DispString);
+    // console.log("Length of the string" + DispString.length);
     DispUpdate(DispString);
     if(DispString.length == 0)
         DispUpdate("0");
 }
 
+// Function to evaluate string passed to it 😓
+function sigma(string)
+{   
+    let OpArray = ["+","-","/","*"];
+    counter = 0;
+    let lh = "";
+    let rh = "";
+    let operator = "";
+    let ans = 0;
+    let calcuflag = false;
+
+    // lets try this now
+    console.log("starting loop");
+    while(counter < string.length)
+    {  
+        if(OpArray.indexOf(string[counter]) !== -1)
+           {
+                console.log("Operator detected at counter = "+ counter);
+                operator = string[counter];
+                counter += 1;
+                continue;
+           }
+
+        if(operator === "")
+            lh += string[counter];
+        else
+            {
+                rh += string[counter];
+                if(OpArray.indexOf(string[counter+1] ) !== -1)
+                    calcuflag = true;
+            }
+        
+        console.log("Lh is now: " + lh);
+        console.log("Rh is now: " + rh);
+        console.log("Operator is now: " + operator);
+        counter += 1;
+        
+         if(counter == string.length|| calcuflag == true)
+            {   
+                let buffer = ans;
+                if(operator ==="/" || operator ==="*")
+                    {   
+                        if(ans == 0)
+                            buffer = lh;
+                        ans = operate(+buffer,+rh,operator);
+                    }
+                else
+                   ans += operate(+lh,+rh,operator);
+
+                console.log(" Current Ans: " + ans);
+                console.log("Was doing "+lh+operator+rh+"="+ans);
+                console.log("LH: " + lh);
+                console.log("RH: " + rh);
+                console.log("Operator: " + operator);
+
+                
+                lh ="";
+                rh = "";
+                operator = "";
+                calcuflag = false;
+            }        
+    }
+
+    console.log("Computing:  "+lh+operator+rh+" = "+ans);
+    // console.log("RH: " + rh);
+    // console.log("LH: " + lh);
+    // console.log("Operator: " + operator);
+    console.log("Counter: " + counter);
+    console.log("String Length: " + string.length);
+    DispString = "";
+    DispUpdate(ans);
+
+}
